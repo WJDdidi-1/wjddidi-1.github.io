@@ -47,3 +47,14 @@ python3 -m http.server 8765
 ## Privacy and content
 
 This repository contains only the curated website. Professional contact email and public project links are included; private correspondence, phone numbers, addresses, original application documents and confidential materials are excluded. The illustration is conceptual, not a photograph of deployed hardware. Project source links are provided for inspection, not as a claim that every planned feature is complete.
+
+## 访问统计（2026-10-30 新增）
+
+主页 `Visits` 区域显示真实累计访问量、当天访问量、每日/累计曲线和国家/地区来源地图，可切换 30 天、90 天、一年和全部历史，并导出 CSV。
+
+- 数据从首次计数开始，无法补回此前的访问量；PV 表示页面加载次数，不等于独立访客人数。
+- 静态页面仍在 GitHub Pages；后端和数据库在 Sites 的 Cloudflare Worker / D1 中，源码见 `backend/`。
+- 不存 IP，不请求浏览器精确定位，不使用 Cookie、跨访问标识或指纹。地图点是国家/地区的示意位置；VPN 会影响地区判定。
+- 服务异常时显示不可用，已有数据保留为上次加载状态，不能把异常当成零访问量。
+- 数据库与网站文件分别保存。请使用页面的 CSV 导出另存汇总数据；本地网站 ZIP 只备份源码，不包含云端数据库。
+- `privacy.html` 解释统计范围，`assets/world-map.svg` 和 `assets/country-points.json` 基于公共领域的 Natural Earth 数据。
