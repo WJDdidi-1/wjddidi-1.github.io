@@ -17,7 +17,7 @@ Current service: https://felix-wang-portfolio.wjddidi7831.chatgpt.site
 
 No IP address, precise coordinate, referral URL, cookie, browser storage or stable visitor identifier is used. Client and server respect DNT/GPC; obvious bot user agents are ignored. Counts are page views, not unique visitors. Public counters remain susceptible to scripted traffic; origin checks and UUID deduplication are basic controls, not a guarantee against deliberate inflation.
 
-Country data uses Cloudflare request metadata. If the platform does not supply it, it remains unknown. Marker coordinates come from a static Natural Earth representative-point file, not from the visitor.
+Country data prefers Cloudflare request metadata / CF-IPCountry. If dispatch omits those, the browser reads only the `loc` country field from `https://www.cloudflare.com/cdn-cgi/trace` (CORS-supported), with no credentials or referrer, and supplies it as an approximate fallback. If blocked or missing, it remains unknown. Client-supplied country is not a trusted location claim and must not be used for security decisions. Marker coordinates come from a static Natural Earth representative-point file, not from the visitor.
 
 ## Tests and migration
 

@@ -13,8 +13,9 @@ async function collect(request,env){
  const raw=await request.text();if(raw.length>512)return json({error:'payload_too_large'},413);
  let body;try{body=JSON.parse(raw)}catch{return json({error:'invalid_json'},400)}
  if(!/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(body?.eventId||'')||!['/','/index.html','/profile.html'].includes(body.path))return json({error:'invalid_event'},400);
- // Cloudflare provides approximate network country metadata. Never read or store an IP.
- const code=request.cf?.country;
+ // Prefer edge metadata. If dispatch omits it, accept the browser Cloudflare country lookup.
+ // This is approximate analytics, not a trusted location or security decision. Never store an IP.
+ const code=request.cf?.country || request.headers.get('CF-IPCountry') || body.country;
  const country=typeof code==='string'&&/^[A-Z]{2}$/.test(code)?code:'XX';
  const today=dayNow();
  await env.DB.batch([

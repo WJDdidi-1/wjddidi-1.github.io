@@ -12,7 +12,9 @@
  async function record(){
   if(!allowedHost || optedOut || !['/','/index.html','/profile.html'].includes(location.pathname))return;
   // Ephemeral per-page event ID supports retry deduplication, never visitor identification.
-  try{await fetch(service+'/api/collect',{method:'POST',mode:'cors',credentials:'omit',headers:{'Content-Type':'application/json'},body:JSON.stringify({eventId:crypto.randomUUID(),path:location.pathname}),keepalive:true,signal:AbortSignal.timeout(6000)})}catch{/* Analytics must never block browsing. */}
+  let country;
+  try{const lookup=await fetch('https://www.cloudflare.com/cdn-cgi/trace',{credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer',signal:AbortSignal.timeout(3000)});if(lookup.ok){const match=(await lookup.text()).match(/^loc=([A-Z]{2})$/m);country=match?.[1]}}catch{/* Missing locations stay unknown. */}
+  try{await fetch(service+'/api/collect',{method:'POST',mode:'cors',credentials:'omit',headers:{'Content-Type':'application/json'},body:JSON.stringify({eventId:crypto.randomUUID(),path:location.pathname,country}),keepalive:true,signal:AbortSignal.timeout(6000)})}catch{/* Analytics must never block browsing. */}
  }
  const dashboard = document.querySelector('#visitors');
  if(!dashboard){void record();return}
