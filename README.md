@@ -13,7 +13,7 @@ A portable, dependency-free static portfolio for Felix (Jiandi) Wang.
 - `profile.html`: concise profile with print-friendly styling.
 - `styles.css`: responsive layouts, typography and colours.
 - `script.js`: optional project filtering. All project content remains available without JavaScript.
-- `assets/`: local illustration and favicon.
+- `assets/`: local illustration, favicon, and `og-card.png` (1200×630 social preview used by `og:image` / `twitter:image`).
 - `.nojekyll`: serve the static files without Jekyll processing.
 
 ## 本地预览
