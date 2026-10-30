@@ -44,11 +44,11 @@
   const list=document.querySelector('#analytics-country-list');list.replaceChildren();
   const max=Math.max(...data.countries.map(c=>c.views),1);let unmapped=0;
   for(const country of data.countries){
-   const li=document.createElement('li'),name=document.createElement('span'),value=document.createElement('span');name.textContent=countryName(country.country);value.textContent=`${number(country.views)} views`;li.append(name,value);list.append(li);
+   const li=document.createElement('li'),name=document.createElement('span'),value=document.createElement('span');name.textContent=countryName(country.country);value.textContent=`${number(country.views)} view${country.views===1?'':'s'}`;li.append(name,value);list.append(li);
    const p=points[country.country];if(!p){unmapped+=country.views;continue}
    // Symbol area, rather than radius, is proportional to page-view count.
    const radius=4+16*Math.sqrt(country.views/max),x=(p.lon+180)*2.5,y=(85-p.lat)*400/145;
-   const mark=el('g',{tabindex:0,role:'img','aria-label':`${name.textContent}: ${country.views} page views`});mark.append(el('title',{},`${name.textContent} · ${number(country.views)} page views`),el('circle',{cx:x,cy:y,r:radius}));svg.append(mark);
+   const mark=el('g',{tabindex:0,role:'img','aria-label':`${name.textContent}: ${country.views} page view${country.views===1?'':'s'}`});mark.append(el('title',{},`${name.textContent} · ${number(country.views)} page view${country.views===1?'':'s'}`),el('circle',{cx:x,cy:y,r:radius}));svg.append(mark);
   }
   if(!data.countries.length){const li=document.createElement('li');li.textContent='No country-level data yet.';list.append(li)}
   document.querySelector('#map-note').textContent=`${number(data.windowTotal)} views in the selected period · ${number(data.unknown)} with unknown origin${unmapped?` · ${number(unmapped)} listed without a map point`:''}. Markers represent countries / regions, not exact visitor locations.`;
